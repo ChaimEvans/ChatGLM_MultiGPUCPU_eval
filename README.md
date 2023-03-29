@@ -78,6 +78,7 @@ print(response)
 |layers|object|layers各层使用的设备|
 |final_layernorm|str|final_layernorm层使用的设备|
 ## 已测试
+> 请根据自身情况调节
 ### FP16
 ```python
 MultiDevices.GPU_precision = 'fp16' # 或者不设置
