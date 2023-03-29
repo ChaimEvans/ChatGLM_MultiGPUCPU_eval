@@ -140,4 +140,4 @@ MultiDevices.layers={
                     }
 MultiDevices.final_layernorm = 'cpu'
 ```
-推荐使用已量化的int4模型，并确认CPU Kernel编译成功
+推荐使用已量化的int4模型，并确认CPU Kernel编译成功，此时MultiDevices.embeddings应填fp16或不填。
