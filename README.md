@@ -11,11 +11,11 @@
 ```
 #### 调用函数
 ```python
->>> model = MultiDevices.ConfigMultiDevices(model,embeddings='cuda:1',
+>>> model = MultiDevices.ConfigMultiDevices(model,embeddings='cpu',
                                                   layers={'cuda:0': '1-14',
                                                           'cuda:1': '15-28'},
                                                   final_layernorm='cuda:1')
-word_embeddings -> cuda:1
+word_embeddings -> cpu
 layer 0 -> cuda:0
 layer 1 -> cuda:0
 layer 2 -> cuda:0
@@ -45,7 +45,7 @@ layer 25 -> cuda:1
 layer 26 -> cuda:1
 layer 27 -> cuda:1
 final_layernorm -> cuda:1
-lm_head -> cuda:1
+lm_head -> cpu
 hooked.
 ```
 ```python
