@@ -3,6 +3,7 @@
 > ❗在大多数情况下并不能加速推理，旨在使更低端的设备可用更高精度的推理
 ## 推理
 ### 1.从仓库下载 MultiDevices.py
+[MultiDevices.py](https://raw.githubusercontent.com/ChaimEvans/ChatGLM_MultiGPUCPU_eval/main/MultiDevices.py)
 ### 2.加载模型
 参考[官方文档](https://github.com/THUDM/ChatGLM-6B)
 ```python
@@ -136,6 +137,6 @@ MultiDevices.layers={
                         'cuda:0': '1-24',
                         'cpu': '25-28'
                     }
-MultiDevices.final_layernorm='cpu'
+MultiDevices.final_layernorm = 'cpu'
 ```
 推荐使用已量化的int4模型，并确认CPU Kernel编译成功
