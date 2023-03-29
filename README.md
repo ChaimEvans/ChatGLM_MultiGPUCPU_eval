@@ -58,6 +58,7 @@ hooked.
 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你,欢迎问我任何问题。
 ```
 ## 函数说明
+![结构](structure.jpg)
 ```python
 MultiDevices.ConfigMultiDevices(model,
                                 embeddings='device',
