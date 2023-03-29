@@ -74,9 +74,9 @@ print(response)
 |----|:-:|---|
 |GPU_precision|str|模型量化精度 fp16(默认)，int8，int4|
 |CPU_precision|str|CPU中的模型精度 fp32(默认)，bf16|
-|embeddings|str|embeddings层使用的设备|
-|layers|object|layers各层使用的设备|
-|final_layernorm|str|final_layernorm层使用的设备|
+|embeddings|str|embeddings 层使用的设备|
+|layers|object|layers 各层（1~28）分别使用的设备|
+|final_layernorm|str|final_layernorm 层使用的设备|
 ## 已测试
 > 请根据自身情况调节
 ### FP16
