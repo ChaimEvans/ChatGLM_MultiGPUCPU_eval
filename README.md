@@ -109,3 +109,4 @@ layers={
        },
 final_layernorm='cpu'
 ```
+请使用已量化的模型，并确认CPU Kernel编译成功
