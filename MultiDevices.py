@@ -6,14 +6,14 @@ class hook_layer(torch.nn.Module):
     def __init__(self, layer, device, data_temp, tag) -> None:
         super().__init__()
         self.layer = layer.float().to(device) if device == 'cpu' else layer.to(device)
-        # print(device)
+        print(device)
         self.device = device
         self.device_index = None if device == 'cpu' else int(device.split(':')[1])
         self.data_temp = data_temp
         self.tag = tag
 
     def ToDevice(self, _nn, hidden_states=False):
-        print(self.tag, _nn.device, '->', self.device)
+        # print(self.tag, _nn.device, '->', self.device)
         if(hidden_states):
             if(self.device == 'cpu'):
                 return _nn.float().to(self.device)
@@ -54,13 +54,13 @@ class hook_easy(torch.nn.Module):
     def __init__(self, nn, device, tag) -> None:
         super().__init__()
         self.nn = nn.float().to(device) if device == 'cpu' else nn.to(device)
-        # print(device)
+        print(device)
         self.device = device
         self.device_index = None if device == 'cpu' else int(device.split(':')[1])
         self.tag = tag
 
     def ToDevice(self, _nn):
-        print(self.tag, _nn.device, '->', self.device)
+        # print(self.tag, _nn.device, '->', self.device)
         if(self.device == 'cpu'):
             return _nn.float().to(self.device)
         else:
@@ -93,7 +93,7 @@ def hook(model, embeddings, layers, final_layernorm):
 
 def PickupLayersParameter(layers):
     # 处理layers参数
-    if(layers is None or len(layers) < 2):
+    if(layers is None or len(layers) < 1):
         raise 'bad layer parameter'
     check_id = set(range(1, 28 + 1))
     layers_num = 0
