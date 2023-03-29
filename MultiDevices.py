@@ -5,17 +5,20 @@ from typing import Optional, Tuple
 class hook_layer(torch.nn.Module):
     def __init__(self, layer, device, data_temp, tag) -> None:
         super().__init__()
-        self.layer = layer.to(device)
-        print(device)
+        self.layer = layer.float().to(device) if device == 'cpu' else layer.to(device)
+        # print(device)
         self.device = device
-        self.device_index = device == 'cpu' if 0 else int(device.split(':')[1])
+        self.device_index = None if device == 'cpu' else int(device.split(':')[1])
         self.data_temp = data_temp
         self.tag = tag
 
-    def ToDevice(self, _nn):
+    def ToDevice(self, _nn, hidden_states=False):
         print(self.tag, _nn.device, '->', self.device)
-        if(self.device == 'cpu'):
-            _nn.float().to(self.device)
+        if(hidden_states):
+            if(self.device == 'cpu'):
+                return _nn.float().to(self.device)
+            else:
+                return _nn.half().to(self.device)
         else:
             return _nn.to(self.device)
 
@@ -27,14 +30,10 @@ class hook_layer(torch.nn.Module):
                 layer_past: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
                 use_cache: bool = False,
                 output_attentions: bool = False,):
-        if(layer_id == 0):
-            hidden_states = self.ToDevice(hidden_states)
+        if(layer_id == 0 or hidden_states.device.index != self.device_index):
+            hidden_states = self.ToDevice(hidden_states, True)
             self.data_temp.position_ids = self.ToDevice(position_ids)
             self.data_temp.attention_mask = self.ToDevice(attention_mask)
-        elif(hidden_states.device.index != self.device_index):
-            hidden_states = self.ToDevice(hidden_states)
-            self.data_temp.position_ids = self.ToDevice(self.data_temp.position_ids)
-            self.data_temp.attention_mask = self.ToDevice(self.data_temp.attention_mask)
         output = self.layer(hidden_states,
                             self.data_temp.position_ids,
                             self.data_temp.attention_mask,
@@ -54,18 +53,21 @@ class layers_data_temp():
 class hook_easy(torch.nn.Module):
     def __init__(self, nn, device, tag) -> None:
         super().__init__()
-        self.nn = nn.to(device)
-        print(device)
+        self.nn = nn.float().to(device) if device == 'cpu' else nn.to(device)
+        # print(device)
         self.device = device
-        self.device_index = device == 'cpu' if 0 else int(device.split(':')[1])
+        self.device_index = None if device == 'cpu' else int(device.split(':')[1])
         self.tag = tag
 
     def ToDevice(self, _nn):
         print(self.tag, _nn.device, '->', self.device)
         if(self.device == 'cpu'):
-            _nn.float().to(self.device)
+            return _nn.float().to(self.device)
         else:
-            return _nn.to(self.device)
+            if(self.tag == 'final_layernorm'):
+                return _nn.half().to(self.device)
+            else:
+                return _nn.to(self.device)
 
     def forward(self, input):
         if(input.device.index != self.device_index):
