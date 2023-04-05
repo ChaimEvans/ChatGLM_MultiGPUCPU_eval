@@ -114,7 +114,7 @@ MultiDevices.embeddings = 'cpu',
 MultiDevices.layers={
                         'cuda:0': '1-28',
                     }
-MultiDevices.final_layernorm = 'cuda:1'
+MultiDevices.final_layernorm = 'cuda:0'
 ```
 #### 6G GPU + CPU
 > NVIDIA Tesla P4
