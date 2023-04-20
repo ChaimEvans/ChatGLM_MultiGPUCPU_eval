@@ -121,7 +121,7 @@ MultiDevices.final_layernorm = 'cuda:0'
 ```python
 MultiDevices.embeddings = 'cpu',
 MultiDevices.layers={
-                        'cuda:1': '1-24',
+                        'cuda:0': '1-24',
                         'cpu':'25-28'
                     }
 MultiDevices.final_layernorm = 'cpu'
