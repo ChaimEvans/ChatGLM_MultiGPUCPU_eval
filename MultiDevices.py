@@ -204,9 +204,9 @@ def quantize(layer, weight_bit_width, empty_init=False):
 
 CPU_precision = 'fp32'
 GPU_precision = 'fp16'
-embeddings = 'cuda:1'
-layers = {'cuda:1': '1-28'}
-final_layernorm = 'cuda:1'
+embeddings = 'cuda:0'
+layers = {'cuda:0': '1-28'}
+final_layernorm = 'cuda:0'
 new_layers = [None for i in range(28)] # ['cuda:1','cuda:0'...]
 
 def CPU_weight_type(_nn):
